@@ -382,26 +382,47 @@ if ('IntersectionObserver' in window && _secs.length) {
     if (track && id) track.textContent = LABELS[id] || id;
   }
 
-  // Play/pause button
-  btn.addEventListener('click', function() {
-    if (!curId) return;
+// Play/pause button (Master Override Version)
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation(); // Stop background clicks from confusing the browser
+    
+    // Force the browser's audio engine to wake up
+    var ac = getAC();
+    if (ac.state === 'suspended') ac.resume();
+
+    // If the browser blocked the music on load, scan the screen, find the chapter, and play it
+    if (!curId) {
+      var sections = Object.keys(MAP).map(function(id) { return document.getElementById(id); }).filter(Boolean);
+      var best = sections[0];
+      var minDiff = Infinity;
+      sections.forEach(function(s) {
+        var rect = s.getBoundingClientRect();
+        var diff = Math.abs(rect.top + rect.height/2 - window.innerHeight/2);
+        if (diff < minDiff) { minDiff = diff; best = s; }
+      });
+      curId = best ? best.id : 'coverpage';
+      paused = false;
+      loadAndPlay(curId);
+      return;
+    }
+
+    // Normal play/pause logic
     if (paused) {
       var savedId = curId;
-      curId = null; // Hidden fix: forces the player to clear its lock and restart
+      curId = null;
       paused = false;
       loadAndPlay(savedId);
     } else {
-      // Soft pause: fade + stop
       if (curGain) {
-        var t = getAC().currentTime;
+        var t = ac.currentTime;
         curGain.gain.cancelScheduledValues(t);
         curGain.gain.setValueAtTime(curGain.gain.value, t);
         curGain.gain.linearRampToValueAtTime(0, t + 0.5);
-        var savedId = curId;
+        var holdId = curId;
         setTimeout(function() {
-          try{ curSrc.stop(); }catch(e){}
+          try{ curSrc.stop(); }catch(err){}
           curGain.disconnect();
-          curSrc = null; curGain = null; curId = savedId;
+          curSrc = null; curGain = null; curId = holdId;
         }, 700);
       }
       paused = true;
