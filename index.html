@@ -13,7 +13,7 @@ html{scroll-behavior:smooth}
 body{background:#f4f1ea;color:#1a2238;font-family:'Fraunces',Georgia,serif;-webkit-font-smoothing:antialiased}
 
 /* NAV */
-.book-nav{position:fixed;top:0;left:0;right:0;z-index:300;background:rgba(26,34,56,0.96);backdrop-filter:blur(8px);display:flex;align-items:center;padding:0 18px;overflow-x:auto;scrollbar-width:none;border-bottom:2px solid #8c2f2a;transform:translateY(-100%);transition:transform .35s ease}
+.book-nav{position:fixed;top:0;left:0;right:0;z-index:300;background:#1a2238;display:flex;align-items:center;padding:0 18px;overflow-x:auto;scrollbar-width:none;border-bottom:2px solid #8c2f2a;transform:translateY(-100%);transition:transform .35s ease}
 .book-nav.visible{transform:translateY(0)}
 .book-nav::-webkit-scrollbar{display:none}
 .nav-brand{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:14px;color:#f4f1ea;padding:12px 14px 12px 0;border-right:1px solid rgba(244,241,234,.15);margin-right:8px;white-space:nowrap;flex-shrink:0}
@@ -121,7 +121,7 @@ mark.hl-flash{animation:hlFlash 1.6s ease}
 .hl-ne-save{background:#c9a054;border:0;color:#1a2238;font-family:'Spline Sans Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;padding:8px 16px;border-radius:5px}
 .hl-ne-save:hover{background:#d8b066}
 /* notes drawer */
-.notes-backdrop{position:fixed;inset:0;background:rgba(9,11,18,.55);backdrop-filter:blur(2px);z-index:600;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.notes-backdrop{position:fixed;inset:0;background:rgba(9,11,18,.62);z-index:600;opacity:0;pointer-events:none;transition:opacity .3s ease}
 .notes-backdrop.show{opacity:1;pointer-events:auto}
 .notes-drawer{position:fixed;top:0;right:0;height:100%;width:min(424px,92vw);background:#151b2c;color:#f4f1ea;z-index:610;display:flex;flex-direction:column;transform:translateX(102%);transition:transform .36s cubic-bezier(.36,.02,.1,1);box-shadow:-22px 0 64px rgba(0,0,0,.46)}
 .notes-drawer.show{transform:none}
@@ -2361,8 +2361,51 @@ body[dir="rtl"] .js-anim .pull::before{left:auto;right:0}
 .interstitial-embed iframe{width:min(560px,90vw);aspect-ratio:3/4;border:0;display:block;background:#0e0e0e;box-shadow:0 30px 70px rgba(0,0,0,.55);color-scheme:light}
 @media print{.interstitial-embed{display:none}}
 </style>
+<style id="ad-dark">
+/* ===== DARK MODE ===== (interstitials, covers & progress bar are already dark — left as-is) */
+html.dark{
+  --ink:#ece7da;
+  --ink-soft:#b6b2a6;
+  --paper:#14161c;
+  --paper-deep:#1d2029;
+  --slate:#9095a6;
+  --rule:rgba(255,255,255,.12);
+  --oxblood:#c75d54;
+  --oxblood-soft:#dd857c;
+  --gold:#cda05a;
+  --teal:#5fa39b;
+  --teal-soft:#7bbab3;
+}
+html.dark body{ background:var(--paper); color:var(--ink); }
+body{ transition:background-color .25s ease, color .25s ease; }
+/* TOC */
+html.dark .book-toc{ background:#101218; }
+.dark .toc-demo{ color:#f1ede1; }
+.dark .toc-after{ color:#9aa3c0; }
+.dark .toc-byline, .dark .toc-part{ color:#9095a6; }
+.dark .toc-part::after{ background:rgba(255,255,255,.12); }
+.dark a.toc-row{ border-color:rgba(255,255,255,.1); }
+.dark a.toc-row:first-child{ border-top-color:rgba(255,255,255,.1); }
+.dark a.toc-row:hover{ background:#242836; color:#f4f1ea; }
+.dark .toc-num, .dark .toc-eyebrow{ color:#d27a72; }
+/* hairline rules */
+.dark .chapter-break::before, .dark .chapter-break::after{ background:rgba(255,255,255,.12); }
+/* emphasis blocks that use --ink as a BACKGROUND → dark inset panels with light text */
+.dark .verdict, .dark .arg-head, .dark .case-head, .dark .call, .dark .ledger-col.havenot{ background:#0b0c11; color:var(--ink); }
+.dark .havenot, .dark .havenot .ledger-item{ color:var(--ink); }
+.dark .case-stat{ background:var(--paper-deep); }
+/* theme toggle button (lives in the always-dark nav) */
+.theme-toggle{position:relative;width:34px;height:34px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:rgba(244,241,234,.07);border:1px solid rgba(244,241,234,.18);color:#f4f1ea;cursor:pointer;padding:0;margin-left:12px;flex-shrink:0;transition:background .2s ease,border-color .2s ease,color .2s ease}
+.theme-toggle:hover{background:rgba(244,241,234,.14);border-color:rgba(201,160,84,.55);color:#c9a054}
+.theme-toggle svg{width:15px;height:15px;display:block}
+.theme-toggle .ic-sun{display:none}
+html.dark .theme-toggle .ic-sun{display:block}
+html.dark .theme-toggle .ic-moon{display:none}
+body[dir="rtl"] .theme-toggle{margin-left:0;margin-right:12px}
+</style>
 </head>
 <body>
+<script>(function(){try{var m=localStorage.getItem('ad_theme');if(!m){m=(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';}if(m==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
 
 <nav class="book-nav" id="bookNav" dir="ltr">
   <span class="nav-brand" data-i18n="brand">After Democracy</span>
@@ -2387,6 +2430,10 @@ body[dir="rtl"] .js-anim .pull::before{left:auto;right:0}
     <option value="fr">FR · Français</option>
     <option value="es">ES · Español</option>
   </select>
+  <button class="theme-toggle" id="themeToggle" title="Switch to dark mode" aria-label="Switch to dark mode">
+    <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg>
+    <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+  </button>
   <div class="music-player" id="musicPlayer">
     <button class="mp-toggle" id="mpToggle" title="Play soundtrack" aria-label="Play soundtrack">
       <svg class="mp-icon mp-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l10-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="19" cy="16" r="3"></circle></svg>
@@ -6578,17 +6625,26 @@ if('IntersectionObserver' in window){
   window.addEventListener('load', check);
   check();
 
-  // ── Interstitial iframes: lazy-load srcdoc + pause loop when offscreen ──
+  // ── Heavy iframes (interstitials + cover + back cover): load near viewport,
+  //    UNLOAD when far, pause loop when offscreen. Keeps only ~1-2 alive at once
+  //    so the page stays light on phones/tablets no matter how deep you scroll. ──
   var _iframes = [].slice.call(document.querySelectorAll('.interstitial-embed iframe'));
+  var _cf = document.querySelector('.cover-frame'); if(_cf) _iframes.push(_cf);
+  var _bf = document.querySelector('iframe[title="Back Cover"]'); if(_bf) _iframes.push(_bf);
+  // stash any inline srcdoc so an unloaded frame can be rebuilt later
+  _iframes.forEach(function(f){ if(!f.dataset.srcdoc && f.getAttribute('srcdoc')){ f.dataset.srcdoc = f.getAttribute('srcdoc'); } });
+
   if(_iframes.length && 'IntersectionObserver' in window){
     var _loadIO = new IntersectionObserver(function(es){
       es.forEach(function(e){
+        var f=e.target;
         if(e.isIntersecting){
-          var f=e.target;
-          if(!f.getAttribute('srcdoc') && f.dataset.srcdoc){ f.srcdoc=f.dataset.srcdoc; }
+          if(f.dataset.srcdoc && !f.getAttribute('srcdoc')){ f.srcdoc=f.dataset.srcdoc; }
+        } else {
+          if(f.getAttribute('srcdoc')){ f.removeAttribute('srcdoc'); } // frees its document, canvas & fonts and stops its animation
         }
       });
-    }, {rootMargin:'800px 0px'});
+    }, {rootMargin:'500px 0px'});
     var _playIO = new IntersectionObserver(function(es){
       es.forEach(function(e){
         var w; try{ w=e.target.contentWindow; }catch(err){}
@@ -6597,7 +6653,7 @@ if('IntersectionObserver' in window){
     }, {rootMargin:'150px 0px'});
     _iframes.forEach(function(f){ _loadIO.observe(f); _playIO.observe(f); });
   } else if(_iframes.length){
-    _iframes.forEach(function(f){ if(f.dataset.srcdoc) f.srcdoc=f.dataset.srcdoc; });
+    _iframes.forEach(function(f){ if(f.dataset.srcdoc && !f.getAttribute('srcdoc')) f.srcdoc=f.dataset.srcdoc; });
   }
 })();
 </script>
@@ -6959,6 +7015,20 @@ if('IntersectionObserver' in window){
     window.addEventListener('pointerdown',arm); window.addEventListener('keydown',arm); window.addEventListener('touchstart',arm);
   }
   updTip();
+})();
+</script>
+
+<script>
+/* ===== Dark / light theme toggle ===== */
+(function(){
+  var btn=document.getElementById('themeToggle'); if(!btn) return;
+  function tip(){ var d=document.documentElement.classList.contains('dark'); btn.title=d?'Switch to light mode':'Switch to dark mode'; btn.setAttribute('aria-label',btn.title); }
+  btn.addEventListener('click', function(){
+    var d=document.documentElement.classList.toggle('dark');
+    try{ localStorage.setItem('ad_theme', d?'dark':'light'); }catch(e){}
+    tip();
+  });
+  tip();
 })();
 </script>
 </body>
