@@ -171,6 +171,7 @@ body[dir="rtl"] .note-del{right:auto;left:8px}
 /* BACK COVER */
 .book-back-fs{width:100vw;height:100vh;background:#0e0e0e;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
 .back-frame{height:100vh;aspect-ratio:2/3;width:auto;max-width:100vw;border:none;display:block}
+html:not(.dark) .book-cover-fs,html:not(.dark) .book-back-fs{background:#e7e3d6}
 
 @media(max-width:600px){
   .book-chapter{padding:0 18px}
@@ -2956,8 +2957,39 @@ html, body {
 .side-eye .se-iris::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:46%;height:46%;background:#0b0405;border-radius:50%}
 .side-eye.blink{transform:scaleY(0.1)}
 </style>
+<style>
+/* ── LIGHT THEME (follows the book) ── */
+html.light .cover{background:radial-gradient(120% 92% at 50% 28%,#f6f3ea 0%,#efece3 56%,#e7e3d6 100%)}
+html.light .reg::before,html.light .reg::after{background:rgba(20,17,15,.55)}
+html.light .rule{background:#1a1714}
+html.light .rule.rthin{background:rgba(0,0,0,.10)}
+html.light .ballot-body{background:#16140f}
+html.light .ballot-slot{background:#efece3}
+html.light .ballot-leg,html.light .ballot-base{background:#16140f}
+html.light .paper{background:#fbf9f2;border-color:rgba(10,10,10,.6)}
+html.light .ph{background:#16140f}
+html.light .ph.r{background:#8c2f2a}
+html.light .ph.r:hover{background:#a03535}
+html.light .clink{border-color:#3a352c}
+html.light .dl{background:#4a463c}
+html.light .dl.b{background:#8c2f2a}
+html.light .hg-t,html.light .hg-b{border-color:#3a352c}
+html.light .hg-n1{border-top-color:#3a352c}
+html.light .hg-n2{border-bottom-color:#3a352c}
+html.light .t-after,html.light .t-demo{color:#16140f}
+html.light .t-demo .ox{color:#8c2f2a}
+html.light .t-sub{color:#6b6456}
+html.light .top-bar{color:#6b6456}
+html.light .ba{color:#16140f}
+html.light .bn{color:#8a8473}
+html.light .scan{background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.02) 3px,rgba(0,0,0,0.02) 4px)}
+html.light .eye-outer{box-shadow:0 0 50px 6px rgba(140,47,42,.13)}
+html.light .cursor{background:#8c2f2a}
+html.light .cursor-ring{border-color:rgba(140,47,42,.4)}
+</style>
 </head>
 <body>
+<script>try{if(!parent.document.documentElement.classList.contains(&quot;dark&quot;)){document.documentElement.classList.add(&quot;light&quot;);}}catch(e){}</script>
 <div class=&quot;cover&quot; id=&quot;cover&quot;>
   <div class=&quot;side-eye&quot; style=&quot;left:3%;top:24%&quot;><div class=&quot;se-iris&quot;></div></div>
   <div class=&quot;side-eye&quot; style=&quot;left:4%;top:50%&quot;><div class=&quot;se-iris&quot;></div></div>
@@ -6534,8 +6566,30 @@ html, body { width: 100%; min-height: 100vh; background: #0e0e0e; display: flex;
   text-align: center; line-height: 1.5;
 }
 </style>
-<style>html,body{padding:0!important;margin:0!important;background:transparent!important;min-height:0!important;height:100%!important;display:block!important;overflow:hidden!important}.cover,.back-cover{width:100%!important;height:100%!important;max-width:none!important;aspect-ratio:auto!important}</style></head>
+<style>html,body{padding:0!important;margin:0!important;background:transparent!important;min-height:0!important;height:100%!important;display:block!important;overflow:hidden!important}.cover,.back-cover{width:100%!important;height:100%!important;max-width:none!important;aspect-ratio:auto!important}</style>
+<style>
+/* ── LIGHT THEME (follows the book) ── */
+html.light .back-cover{background:#efece3;color:#16140f}
+html.light .reg::before,html.light .reg::after{background:rgba(20,17,15,.55)}
+html.light .rule{background:#1a1714}
+html.light .rule.rthin{background:rgba(0,0,0,.10)}
+html.light .scan{background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.02) 3px,rgba(0,0,0,0.02) 4px)}
+html.light .bc-label,html.light .bc-role,html.light .bc-bottom{color:#8a7c5c}
+html.light .bc-quote{color:#16140f}
+html.light .bc-quote .ox{color:#8c2f2a}
+html.light .bc-blurb{color:rgba(22,20,15,.72)}
+html.light .bc-blurb strong{color:#16140f}
+html.light .bc-author{color:#16140f}
+html.light .bc-author .ox{color:#8c2f2a}
+html.light .zone-author{border-top-color:rgba(20,17,15,.2)}
+html.light .bc-bar{background:#16140f}
+html.light .bce-outer{background:#0b0b0d}
+html.light .bce-white{background:#f0ebe0}
+html.light .bce-iris{background:#8c2f2a}
+html.light .bce-pupil{background:#0d0d0d}
+</style></head>
 <body>
+<script>try{if(!parent.document.documentElement.classList.contains(&quot;dark&quot;)){document.documentElement.classList.add(&quot;light&quot;);}}catch(e){}</script>
 <div class=&quot;back-cover&quot;>
 
   <div class=&quot;reg tl&quot;></div><div class=&quot;reg tr&quot;></div>
@@ -6769,7 +6823,9 @@ if('IntersectionObserver' in window){
   function _srcFor(f){
     var s=f.dataset.srcdoc;
     if(s && f.closest && f.closest('.interstitial-embed')){
-      s=s.replace('width=device-width, initial-scale=1.0','width=560, initial-scale=1.0');
+      s=s.replace('width=device-width, initial-scale=1.0','width=560, initial-scale=1.0')
+         .replace('width:100%;height:100%;background:#0a0b0e','width:560px;height:747px;background:#0a0b0e')
+         .replace('width:min(560px,94vw);aspect-ratio:3/4','width:560px;height:747px');
     }
     return s;
   }
@@ -7213,12 +7269,22 @@ if('IntersectionObserver' in window){
 (function(){
   var btn=document.getElementById('themeToggle'); if(!btn) return;
   function tip(){ var d=document.documentElement.classList.contains('dark'); btn.title=d?'Switch to light mode':'Switch to dark mode'; btn.setAttribute('aria-label',btn.title); }
+  function syncCovers(){
+    var light = !document.documentElement.classList.contains('dark');
+    document.querySelectorAll('.cover-frame, iframe[title="Back Cover"]').forEach(function(f){
+      try{ var d=f.contentDocument; if(d&&d.documentElement) d.documentElement.classList.toggle('light', light); }catch(e){}
+    });
+  }
   btn.addEventListener('click', function(){
     var d=document.documentElement.classList.toggle('dark');
     try{ localStorage.setItem('ad_theme', d?'dark':'light'); }catch(e){}
-    tip();
+    tip(); syncCovers();
   });
-  tip();
+  // keep covers in sync once their iframes finish loading
+  document.querySelectorAll('.cover-frame, iframe[title="Back Cover"]').forEach(function(f){
+    f.addEventListener('load', syncCovers);
+  });
+  tip(); syncCovers();
 })();
 
 /* ═══ Eye-opening loader + first-read coachmarks ═══ */
