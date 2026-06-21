@@ -6821,12 +6821,13 @@ if('IntersectionObserver' in window){
   // into the fixed-size iframe element. `width=device-width` makes tablets lay
   // the inner page out at the DEVICE width instead, overflowing & clipping the
   // frame — so pin the inner viewport for interstitials only (covers untouched).
-  function _srcFor(f){
+function _srcFor(f){
     var s=f.dataset.srcdoc;
     if(s && f.closest && f.closest('.interstitial-embed')){
       s=s.replace('width=device-width, initial-scale=1.0','width=560, initial-scale=1.0')
          .replace('width:100%;height:100%;background:#0a0b0e','width:560px;height:747px;background:#0a0b0e')
-         .replace('width:min(560px,94vw);aspect-ratio:3/4','width:560px;height:747px');
+         .replace('width:min(560px,94vw);aspect-ratio:3/4','width:560px;height:747px')
+         .replace(/canvas\.style\.zIndex='5';/g, "canvas.style.zIndex='5';canvas.style.width='100%';canvas.style.height='100%';");
     }
     return s;
   }
