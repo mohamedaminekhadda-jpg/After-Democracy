@@ -4260,7 +4260,7 @@ function colX(i){return (i+0.5)*(W/cols);}
 function inBowl(x){return x>bx0&amp;&amp;x<bx1;}
 function spawn(g){var x;do{x=W*0.06+Math.random()*W*0.88;}while(inBowl(x));g.x=x;g.y=-Math.random()*H*0.4;g.vy=2.2+Math.random()*1.6;g.c=Math.floor(x/W*cols);}
 function onResize(){
-  ground3=H*0.82;maxH=H*0.40;bowlX=W*0.5;bowlW=W*0.26;bx0=bowlX-bowlW*0.62;bx1=bowlX+bowlW*0.62;
+  ground3=H*0.72;maxH=H*0.40;bowlX=W*0.5;bowlW=W*0.26;bx0=bowlX-bowlW*0.62;bx1=bowlX+bowlW*0.62;
   heights=[];for(var i=0;i<cols;i++)heights[i]=0;
   grains=[];for(var i=0;i<46;i++){var g={};spawn(g);grains.push(g);}
   resetT=0;
