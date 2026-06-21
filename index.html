@@ -3730,6 +3730,12 @@ function resize(){
   DPR=Math.min(window.devicePixelRatio||1,2);
   W=r.width;H=r.height;
   canvas.style.position='absolute';canvas.style.inset='0';canvas.style.zIndex='5';
+  
+  // ADD THESE TWO LINES TO LOCK THE CSS SIZE:
+  canvas.style.width='100%';
+  canvas.style.height='100%';
+  // -----------------------------------------
+  
   canvas.width=Math.round(W*DPR);canvas.height=Math.round(H*DPR);
   ctx.setTransform(DPR,0,0,DPR,0,0);
   if(typeof onResize==='function')onResize();
